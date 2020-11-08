@@ -39,7 +39,20 @@ class Board:
         return (hasNegSequence , hasPosSequence)
 
     def draw(self):
-        print(self.board)
+        for i in range(5,-2,-1):
+            print('| ',end='')
+            for j in range(7):
+                if i == -1:
+                    print('-',end='')
+                elif self.board[i,j] == 1:
+                    print('⬤',end='')
+                elif self.board[i,j] == -1:
+                    print('○',end='')
+                else:
+                    print(' ',end='')
+                print(' ',end='')
+            print('|',end='')
+            print()
 
     def copy(self):
         newBoard = Board(

@@ -26,6 +26,8 @@ class ConnectNGame(Game):
 
     def winner(self):
         negWon,posWon = self.board.hasSequence()
+        if not len(self.board.getNonEmptyColumns()):
+            return None
 
         if negWon: return -1
         if posWon: return +1

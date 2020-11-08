@@ -1,10 +1,14 @@
+from connect4_minimax_fast import minimax
+
 class MiniMaxAlgo:
 
-    def __init__(self, _searchDepth, aiPlayer):
+    def __init__(self, _searchDepth, aiPlayer, _useFast=False):
 
         assert _searchDepth > 2
 
         self.searchDepth = _searchDepth
+
+        self.useFast = _useFast
         
         if aiPlayer == -1:
             self.selectionFunc = min
@@ -17,13 +21,31 @@ class MiniMaxAlgo:
 
         self.cache = {}
 
-        bestMove,bestCost = self._minimax(game, self.selectionFunc, 0)
+        if self.useFast:
+            str_state = self.getStrState(game)
+            bestMove,bestCost = minimax(str_state, 'A', self.searchDepth, float('-inf'), float('+inf'), self.cache)
+        else:
+            bestMove,bestCost = self._minimax(game, self.selectionFunc, 0)
 
         print(f'best move cost=   {bestCost}')
         print(f'moves searched=   {len(self.cache)}')
-        print(f'cache hits    =   {sum([h for _,_,h in self.cache.values()])}')
 
         return bestMove
+
+    def getStrState(self, game):
+        board = game.board.board
+        s = ''
+
+        for i in range(5,-1,-1):
+            for j in range(7):
+                if board[i,j] == 1:
+                    s += 'H'
+                elif board[i,j] == -1:
+                    s += 'A'
+                else:
+                    s += ' '
+        
+        return s
 
     def _minimax(self, game, selectionFunc, depth):
         

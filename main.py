@@ -10,7 +10,7 @@ if __name__ == '__main__':
     BOARD_HEIGHT = 6
     NUM_FOR_SEQ = 4
 
-    SEARCH_DEPTH = 4
+    SEARCH_DEPTH = 10
 
     game = ConnectNGame(
         BOARD_HEIGHT,
@@ -20,7 +20,8 @@ if __name__ == '__main__':
 
     algo = MiniMaxAlgo(
         SEARCH_DEPTH,
-        AI_PLAYER
+        AI_PLAYER,
+        _useFast=True
     )
 
     run = True
@@ -36,10 +37,16 @@ if __name__ == '__main__':
             run = False
             break
 
+        if winner is None:
+            print(f'no possible moves')
+            print('---game over---')
+            run = False
+            break
+
         turn = game.getTurn()
         print(f'turn: {turn}')
 
-        if True or turn == HUMAN_PLAYER:
+        if turn == HUMAN_PLAYER:
             moves = game.getMoves()
             print(f'moves: {moves}')
 
