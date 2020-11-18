@@ -6,22 +6,14 @@ if __name__ == '__main__':
     HUMAN_PLAYER = +1
     AI_PLAYER = -1
 
-    BOARD_WIDTH = 7
-    BOARD_HEIGHT = 6
-    NUM_FOR_SEQ = 4
+    SEARCH_DEPTH = 14
 
-    SEARCH_DEPTH = 10
-
-    game = ConnectNGame(
-        BOARD_HEIGHT,
-        BOARD_WIDTH,
-        NUM_FOR_SEQ
-    )
+    game = ConnectNGame(6,7,4)
 
     algo = MiniMaxAlgo(
         SEARCH_DEPTH,
         AI_PLAYER,
-        _useFast=True
+        useVeryFast=True
     )
 
     run = True

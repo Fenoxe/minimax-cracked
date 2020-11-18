@@ -1,15 +1,17 @@
-from connect4_minimax_fast import minimax
+from connect4_minimax_fast import minimax as minimax_v1
+from connect4_minimax_veryfast import minimax as minimax_v2,convert_to_bitstrings
 
 class MiniMaxAlgo:
 
-    def __init__(self, _searchDepth, aiPlayer, _useFast=False):
+    def __init__(self, _searchDepth, aiPlayer, _useFast=False, _useVeryFast=False):
 
         assert _searchDepth > 2
 
         self.searchDepth = _searchDepth
 
         self.useFast = _useFast
-        
+        self.useVeryFast = _useVeryFast
+
         if aiPlayer == -1:
             self.selectionFunc = min
         elif aiPlayer == +1:
@@ -21,9 +23,12 @@ class MiniMaxAlgo:
 
         self.cache = {}
 
-        if self.useFast:
+        if self.useVeryFast:
+            position, mask = convert_to_bitstrings(game.board)
+            bestMove,bestCost = minimax_v2(position, mask, self.searchDepth)
+        elif self.useFast:
             str_state = self.getStrState(game)
-            bestMove,bestCost = minimax(str_state, 'A', self.searchDepth, float('-inf'), float('+inf'), self.cache)
+            bestMove,bestCost = minimax_v1(str_state, 'A', self.searchDepth, float('-inf'), float('+inf'), self.cache)
         else:
             bestMove,bestCost = self._minimax(game, self.selectionFunc, 0)
 

@@ -1,4 +1,4 @@
-def minimax(state, player, depth, a, b, cache):
+def minimax(state, depth, a, b, cache):
 
     if state in cache:
         return cache[state]
